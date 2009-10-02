@@ -1,6 +1,6 @@
 It is probably a worthwhile goal to avoid type erasure.
 
-An idea how to do this:
+An idea how to do this, which would also avoid creation of unnecessary vtables:
 
 template<typename T>
 class read_interface_adapter;
