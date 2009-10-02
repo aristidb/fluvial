@@ -9,7 +9,7 @@ struct read_interface {
 	virtual int read();
 
 	template<typename T>
-	read_interface &get(T &base) {
+	read_interface_adapter<T> get(T &base) {
 		return read_interface_adapter(base);
 	}
 };
@@ -38,3 +38,8 @@ struct some_fragment {
 		}
 	};
 };
+
+combiner<..., some_fragment> comb;
+
+auto ad = read_interface::get(comb);
+// ad can now be used polymorphously
