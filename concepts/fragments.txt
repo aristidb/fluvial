@@ -1,0 +1,1 @@
+The idea is to use fragments chaining for compile-time "filter chains", but adapters for run-time chains.
