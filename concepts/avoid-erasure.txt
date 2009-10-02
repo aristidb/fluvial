@@ -1,0 +1,40 @@
+It is probably a worthwhile goal to avoid type erasure.
+
+An idea how to do this:
+
+template<typename T>
+class read_interface_adapter;
+
+struct read_interface {
+	virtual int read();
+
+	template<typename T>
+	read_interface &get(T &base) {
+		return read_interface_adapter(base);
+	}
+};
+
+template<typename T>
+class read_interface_adapter : public read_interface {
+public:
+	read_interface_adapter(T &base) : base(base)
+	{}
+
+	int read() {
+		return base.read();
+	}
+
+private:
+	T &base;
+};
+
+struct some_fragment {
+	typedef boost::mpl::vector1<read_interface> concept;
+
+	template<typename Before>
+	struct fragment : Before {
+		int read() {
+			return 4;
+		}
+	};
+};
